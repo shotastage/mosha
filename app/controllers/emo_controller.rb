@@ -48,7 +48,7 @@ class EmoController < ApplicationController
     # Request headers
     request['Content-Type'] = 'application/json'
     # NOTE: Replace the "Ocp-Apim-Subscription-Key" value with a valid subscription key.
-    request['Ocp-Apim-Subscription-Key'] = 'xxxxxxxxxxxxxxxxxxxxxxx'
+    request['Ocp-Apim-Subscription-Key'] = 'xxxxxxxxxxxxxxxxx'
     # Request body
     # http://localhost:3000/emo/get_image?file_name=02135EC4-5437-46C0-A6DF-4FC586C2C405.jpeg
     request.body = "{\"url\":\"http://" + @@global_host + "/emo/get_image?file_name=" + uploaded_file.original_filename + "\"}"
