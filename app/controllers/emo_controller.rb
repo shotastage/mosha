@@ -2,9 +2,11 @@ require 'net/https'
 
 
 class EmoController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:get_image]
 
-  @@global_host = "keio.box.com"
+
+
+  @@global_host = "133.27.74.149:3000"
   @@response_data = ""
 
   def show
@@ -15,6 +17,15 @@ class EmoController < ApplicationController
     end
   end
 
+
+  def get_image
+    unless params[:file_name].blank?
+      file_name = params[:file_name].to_s
+    end
+    stat = File::stat('public/user_images/' + file_name)
+
+    send_file('public/user_images/' + file_name, :filename => file_name, :length => stat.size)
+  end
 
   def submit
     uploaded_file = emo_param[:file]
@@ -37,14 +48,17 @@ class EmoController < ApplicationController
     # Request headers
     request['Content-Type'] = 'application/json'
     # NOTE: Replace the "Ocp-Apim-Subscription-Key" value with a valid subscription key.
-    request['Ocp-Apim-Subscription-Key'] = 'XXXXXXXXXXXXXXXX'
+    request['Ocp-Apim-Subscription-Key'] = 'xxxxxxxxxxxxxxxxxxxxxxx'
     # Request body
-    request.body = "{\"url\":\"https://" + @@global_host + "/shared/static/gvt5f9p9ozfndewfa6aimte2o8masx8y.jpg\"}"
+    # http://localhost:3000/emo/get_image?file_name=02135EC4-5437-46C0-A6DF-4FC586C2C405.jpeg
+    request.body = "{\"url\":\"http://" + @@global_host + "/emo/get_image?file_name=" + uploaded_file.original_filename + "\"}"
 
     response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
       http.request(request)
     end
 
+    puts "リクエスト"
+    puts request.body.to_s
     puts "API の結果"
     puts response.body.to_s
 
