@@ -1,0 +1,52 @@
+
+<div id="main_screen">
+</div>
+<h1 class="big_title">MOSHA</h1>
+<div class="idx_wrap">
+    <button class="start_button btn_index" id="start_btn">START</button>
+</div>
+
+
+<!-- Modal Contents -->
+
+<div id="dialog" class="dialog show-dialog">
+    <div class="dialog-overlay"></div>
+    <div id="dialog-content" class="dialog-content modal-blue">
+
+
+
+
+    <h1>Sign up</h1>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+    
+      <div class="field">
+        <!-- <%= f.label :email %> --> <br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "inputbox", placeholder: "Email" %>
+      </div>
+    
+      <div class="field">
+        <!-- <%= f.label :password %> -->
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "off", class: "inputbox", placeholder: "Password" %>
+      </div>
+    
+      <div class="field">
+        <!-- <%= f.label :password_confirmation %> --> <br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: "inputbox", placeholder: "Password (confirmation)" %>
+      </div>
+    
+      <div class="actions">
+        <%= f.submit  t('.sign_up', default: 'Sign up'), class: 'cubic-btn' %>
+      </div>
+    <% end %>
+    
+    <%= render "users/shared/links" %>
+    
+
+    
+    </div>
+</div>

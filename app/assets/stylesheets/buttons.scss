@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade|Nunito');
+
+
+$btn-height:  58px;
+$btn-shadow-height: 3px;
+
+//  Reset Default Style
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+}
+
+
+.cubic-btn {
+    display: inline-block;
+    position: relative;
+	width: 210px;
+	height: $btn-height;
+	text-align: center;
+	text-decoration: none;
+	line-height: 60px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+	outline: none;
+    margin: 10px;
+    background: #ED5565;
+    color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 $btn-shadow-height 0 #d24352;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    letter-spacing: 3px;
+	-webkit-transition: all .3s;
+    -moz-transition: all .3s;
+	transition: all .3s;
+
+  
+    &:hover {
+        height:  $btn-height + $btn-shadow-height;
+        box-shadow: 0 0 0 transparent;
+        letter-spacing: 5px;
+    }
+}
+
+
+
+.primary {
+    background: #4FC1E9;
+    box-shadow: 0 $btn-shadow-height 0 #43afd5;
+}
+
+.warning {
+    background:  #FFCE54;
+    box-shadow: 0 $btn-shadow-height 0 #ecbe4b;
+}
+
+
+
+
+@import url('https://fonts.googleapis.com/css?family=Bungee');
+
+.start_button {
+  $btn_height: 80px;
+  height: $btn_height;
+  width: 190px;
+  color: #fff;
+  border-radius: $btn_height;
+  background: #ED5565;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: 'Bungee', cursive;
+}
+
+
+
+
+
+.circle-btn {
+    display: inline-block;
+    position: relative;
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	text-decoration: none;
+    line-height: 60px;
+    font-weight: bold;
+    font-size: 10px;
+	outline: none;
+    background: #ED5565;
+    color: #fff;
+    border-radius: 50px;
+    letter-spacing: 3px;
+    margin-top: 60px;
+    margin-bottom: 5px;
+}
+
+
+
+.btn_wrap {
+    display: flex
+}

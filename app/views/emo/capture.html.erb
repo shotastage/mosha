@@ -1,0 +1,45 @@
+<% content_for :additional do %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/scripts/camera.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+
+<% end %> 
+
+
+<div id="main_screen">
+</div>
+<h1 id="emo" class="big_title">MOSHA</h1>
+<div class="idx_wrap">
+    <button class="start_button btn_index" id="start_btn">TAKE MOSHA</button>
+</div>
+
+
+<script>
+data = <%= @emotion_data.html_safe %>
+</script>
+
+<script src="/scripts/post.js"></script>
+
+
+<!-- Modal Contents -->
+
+<div id="dialog" class="dialog">
+    <div class="dialog-overlay"></div>
+    <div id="dialog-content" class="dialog-content">
+        <h1>What's<br>feeling?</h1>
+        <div class="btn_wrap">
+
+        <%= form_tag '/emo/submit', method: 'post', multipart: true do %>
+                    <%= file_field :fileupload, :file %>
+            	    <%= submit_tag 'TAKE IT!', class: "start_button btn_index" %>
+        <% end %>
+
+            
+        <!--
+            <a class="cubic-btn" href="/users/sign_in">Good!</a>
+            <a class="cubic-btn primary" href="/users/sign_up">Bad</a> -->
+            </div>
+        <!--
+        <button class="dialog-close circle-btn">CLOSE</button> -->
+    </div>
+</div>
