@@ -4,6 +4,7 @@ require 'net/https'
 class EmoController < ApplicationController
   before_action :authenticate_user!
 
+  @@global_host = "keio.box.com"
   @@response_data = ""
 
   def show
@@ -38,7 +39,7 @@ class EmoController < ApplicationController
     # NOTE: Replace the "Ocp-Apim-Subscription-Key" value with a valid subscription key.
     request['Ocp-Apim-Subscription-Key'] = 'XXXXXXXXXXXXXXXX'
     # Request body
-    request.body = "{\"url\":\"https://keio.box.com/shared/static/gvt5f9p9ozfndewfa6aimte2o8masx8y.jpg\"}"
+    request.body = "{\"url\":\"https://" + @@global_host + "/shared/static/gvt5f9p9ozfndewfa6aimte2o8masx8y.jpg\"}"
 
     response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
       http.request(request)
