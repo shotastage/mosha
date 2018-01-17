@@ -1,4 +1,5 @@
 require 'net/https'
+require 'date'
 
 
 class EmoController < ApplicationController
@@ -6,7 +7,7 @@ class EmoController < ApplicationController
 
 
 
-  @@global_host = "133.27.74.149:3000"
+  @@global_host = "133.27.74.96:3000"
   @@response_data = ""
 
   def show
@@ -28,8 +29,11 @@ class EmoController < ApplicationController
   end
 
   def submit
+
+    t = Time.now.to_datetime.to_s
+
     uploaded_file = emo_param[:file]
-    output_path = Rails.root.join('public/user_images/', uploaded_file.original_filename)
+    output_path = Rails.root.join('public/user_images/', t + "-" + uploaded_file.original_filename)
     	
     File.open(output_path, 'w+b') do |fp|
       fp.write  uploaded_file.read
@@ -48,7 +52,7 @@ class EmoController < ApplicationController
     # Request headers
     request['Content-Type'] = 'application/json'
     # NOTE: Replace the "Ocp-Apim-Subscription-Key" value with a valid subscription key.
-    request['Ocp-Apim-Subscription-Key'] = 'xxxxxxxxxxxxxxxxx'
+    request['Ocp-Apim-Subscription-Key'] = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
     # Request body
     # http://localhost:3000/emo/get_image?file_name=02135EC4-5437-46C0-A6DF-4FC586C2C405.jpeg
     request.body = "{\"url\":\"http://" + @@global_host + "/emo/get_image?file_name=" + uploaded_file.original_filename + "\"}"
