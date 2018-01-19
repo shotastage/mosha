@@ -1,0 +1,17 @@
+.alert {
+    color: #fff;
+    font-family: sans-serif;
+}
+
+.message_link {
+    color: #fff;
+    font-family: sans-serif;
+
+    a {
+        text-decoration: none;
+        color: #fff;
+        &:link {
+            text-decoration: none;
+        }
+    }
+}
