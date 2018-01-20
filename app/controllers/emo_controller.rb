@@ -45,43 +45,16 @@ class EmoController < ApplicationController
     File.open(output_path, 'w+b') do |fp|
       fp.write  uploaded_file.read
     end
-      
-    
 
-    
-    # NOTE: You must use the same region in your REST call as you used to obtain your subscription keys.
-    #   For example, if you obtained your subscription keys from westcentralus, replace "westus" in the 
-    #   URL below with "westcentralus".
-    uri = URI('https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize')
-    uri.query = URI.encode_www_form({})
+    @@response_data = request_api()
 
-    request = Net::HTTP::Post.new(uri.request_uri)
-    # Request headers
-    request['Content-Type'] = 'application/json'
-    # NOTE: Replace the "Ocp-Apim-Subscription-Key" value with a valid subscription key.
-    request['Ocp-Apim-Subscription-Key'] = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-    # Request body
-    # http://localhost:3000/emo/get_image?file_name=02135EC4-5437-46C0-A6DF-4FC586C2C405.jpeg
-    request.body = "{\"url\":\"http://" + @@global_host + "/emo/get_image?file_name=" + uploaded_file.original_filename + "\"}"
-
-    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      http.request(request)
-    end
-
-    puts "リクエスト"
-    puts request.body.to_s
-    puts "API の結果"
-    puts response.body.to_s
-
-    @@response_data = response.body.to_s
-
-    #redirect_to action: 'emo#capture'
-    redirect_to :action => "capture"
-    
+    redirect_to :action => "capture"    
   end
     
+
   def add
   end
+
 
   def rmove
   end
@@ -95,4 +68,30 @@ class EmoController < ApplicationController
   def emo_param
     params.require(:fileupload).permit(:file)
   end
+
+  def request_api
+    
+    # Define API entrypoint
+    uri = URI('https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize')
+
+    # Create query
+    uri.query = URI.encode_www_form({})
+
+    request = Net::HTTP::Post.new(uri.request_uri)
+
+    # HTTP Headers
+    request['Content-Type'] = 'application/json'
+    request['Ocp-Apim-Subscription-Key'] = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+  
+    # http://localhost:3000/emo/get_image?file_name=02135EC4-5437-46C0-A6DF-4FC586C2C405.jpeg
+    request.body = "{\"url\":\"http://" + @@global_host + "/emo/get_image?file_name=" + uploaded_file.original_filename + "\"}"
+
+    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+      http.request(request)
+    end
+
+    return response.body.to_s
+  end
+
+
 end
