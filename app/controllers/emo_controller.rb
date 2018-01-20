@@ -1,3 +1,10 @@
+#
+#   emo_controllers.rb
+#   mosha
+#
+#   Copyright (c) 2018 Shota Shimazu. All rights reserved.
+#
+
 require 'net/https'
 require 'date'
 
