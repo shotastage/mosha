@@ -14,7 +14,7 @@ class EmoController < ApplicationController
 
 
 
-  @@global_host = "133.27.74.96:3000"
+  @@global_host = "xxx.xxx.x.xxx:3000"
   @@response_data = ""
 
   def show
@@ -37,16 +37,17 @@ class EmoController < ApplicationController
 
   def submit
 
-    t = Time.now.to_datetime.to_s
-
     uploaded_file = emo_param[:file]
-    output_path = Rails.root.join('public/user_images/', t + "-" + uploaded_file.original_filename)
+
+    file_name = rand(100000).to_s + "-" + uploaded_file.original_filename
+    
+    output_path = Rails.root.join('public/user_images/', file_name)
     	
     File.open(output_path, 'w+b') do |fp|
       fp.write  uploaded_file.read
     end
 
-    @@response_data = request_api()
+    @@response_data = request_api(file_name)
 
     redirect_to :action => "capture"    
   end
@@ -69,7 +70,7 @@ class EmoController < ApplicationController
     params.require(:fileupload).permit(:file)
   end
 
-  def request_api
+  def request_api(uploaded_file)
     
     # Define API entrypoint
     uri = URI('https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize')
@@ -81,10 +82,13 @@ class EmoController < ApplicationController
 
     # HTTP Headers
     request['Content-Type'] = 'application/json'
-    request['Ocp-Apim-Subscription-Key'] = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+    request['Ocp-Apim-Subscription-Key'] = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
   
     # http://localhost:3000/emo/get_image?file_name=02135EC4-5437-46C0-A6DF-4FC586C2C405.jpeg
-    request.body = "{\"url\":\"http://" + @@global_host + "/emo/get_image?file_name=" + uploaded_file.original_filename + "\"}"
+    request.body = "{\"url\":\"http://" + @@global_host + "/emo/get_image?file_name=" + uploaded_file + "\"}"
+
+    puts uploaded_file
+    puts request.body
 
     response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
       http.request(request)
